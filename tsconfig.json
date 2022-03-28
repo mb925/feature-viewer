@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "target": "es2015",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "outDir": "./lib",  // useful for symlinks only
+    "allowSyntheticDefaultImports": true  // useful for symlinks only
+  },
+  "typeRoots" : ["./node_modules/@types"],
+  "types" : [
+    "d3",
+    "underscore",
+    "html-to-image"
+  ],
+
+  "baseUrl": ".",
+  "paths": {
+    "assets/*": ["assets/*"]
+  },
+  "lib": ["es6", "dom", "es2017"],
+  "files": [  "src/calculate.ts",
+    "src/commons.ts",
+    "src/custom-d3.ts",
+    "src/feature-viewer.ts",
+    "src/fillsvg.ts",
+    "src/helper.ts",
+    "src/index.ts",
+    "src/interfaces.ts",
+    "src/tooltip.ts",
+    "src/transition.ts",
+        "./src/index.ts"
+  ],
+  "include": [ // useful for symlinks only
+    "src/calculate.ts",
+    "src/commons.ts",
+    "src/custom-d3.ts",
+    "src/feature-viewer.ts",
+    "src/fillsvg.ts",
+    "src/helper.ts",
+    "src/index.ts",
+    "src/interfaces.ts",
+    "src/tooltip.ts",
+    "src/transition.ts"
+  ],
+  "exclude": ["node_modules"]
+}
