@@ -13946,8 +13946,8 @@ class Commons {
             tagsTrackWidth: 0,
             mobileMode: false,
             margin: {
-                top: 30,
-                bottom: 30,
+                top: 10,
+                bottom: 20,
                 left: 0,
                 right: 0
             },
@@ -14297,7 +14297,7 @@ class FeatureViewer {
                     this.commons.headMargin = 20 * (d.flagLevel - 1);
                     x = this.commons.headMargin + 5;
                 }
-                let y = d.y - 4;
+                let y = d.y;
                 return "translate(" + x + "," + y + ")";
             }
         })
@@ -14809,6 +14809,9 @@ class FeatureViewer {
                 this.commons.trigger(this.commons.events.CLEAR_SELECTION_EVENT);
         });
         this.commons.svgElement = d3.select(`#${this.divId}`).select('svg').node();
+        console.log(this.commons.viewerOptions.margin.left);
+        console.log(this.commons.viewerOptions.margin.top);
+        console.log(this.commons.viewerOptions.margin.left);
         this.commons.svgContainer = this.commons.svg
             .append("g")
             .attr("transform", "translate(" + this.commons.viewerOptions.margin.left + "," + this.commons.viewerOptions.margin.top + ")")

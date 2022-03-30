@@ -30,8 +30,8 @@ class Commons {
         tagsTrackWidth: 0,
         mobileMode: false,
         margin: {
-            top: 30,
-            bottom: 30,
+            top: 10,
+            bottom: 20,
             left: 0,
             right: 0
         },

@@ -186,19 +186,19 @@ class FeatureViewer {
             .enter()
             .append("g")
             .attr("id", function (d) {
-                    // return divId + '_' + d.title.split(" ").join("_") + '_g'
-                    if (d.title === "Sequence") {
-                        return 'sequence'
-                    } else {
-                        return d.id
-                    }
+                // return divId + '_' + d.title.split(" ").join("_") + '_g'
+                if (d.title === "Sequence") {
+                    return 'sequence'
+                } else {
+                    return d.id
+                }
             })
             .attr("class", (d) => {
-                    if (this.commons.viewerOptions.showSubFeatures && d.hasSubFeatures) {
-                        return "flag withsubfeatures"
-                    } else {
-                        return "flag"
-                    }
+                if (this.commons.viewerOptions.showSubFeatures && d.hasSubFeatures) {
+                    return "flag withsubfeatures"
+                } else {
+                    return "flag"
+                }
             })
             .on('click', (d) => {
                 // if (this.commons.viewerOptions.showSubFeatures && d.hasSubFeatures) {
@@ -262,7 +262,7 @@ class FeatureViewer {
                         x = this.commons.headMargin + 5;
                     }
                     // vertical flag placement
-                    let y = d.y - 4;
+                    let y = d.y;
                     return "translate(" + x + "," + y + ")"
                 }
 
@@ -281,11 +281,11 @@ class FeatureViewer {
             .attr("fill", "rgba(39, 37, 37, 0.71)")
             .attr("d", (d) => {
                 if (d.ladderLabel == null) {
-                if (this.commons.viewerOptions.showSubFeatures && d.hasSubFeatures) {
-                    if (d.isOpen) {return this.commons.down_chevron} else {return this.commons.right_chevron}
-                } else {
-                    return ''
-                }
+                    if (this.commons.viewerOptions.showSubFeatures && d.hasSubFeatures) {
+                        if (d.isOpen) {return this.commons.down_chevron} else {return this.commons.right_chevron}
+                    } else {
+                        return ''
+                    }
                 }
             });
 
@@ -294,21 +294,21 @@ class FeatureViewer {
             .append("foreignObject")
             // text
             .attr("class", (d) => {
-                    if (this.commons.viewerOptions.showSubFeatures && d.hasSubFeatures) {
-                        return "yAxis withsubfeatures"
-                    } else {
-                        return "yAxis"
-                    }
+                if (this.commons.viewerOptions.showSubFeatures && d.hasSubFeatures) {
+                    return "yAxis withsubfeatures"
+                } else {
+                    return "yAxis"
+                }
             })
             .attr("x", (d) => {
 
-                    let cvm = 0;
-                    if (this.commons.viewerOptions.showSubFeatures && d.hasSubFeatures) {
-                        // chevron margin, placed rightly
-                        cvm = 17
-                    }
-                    // horizontal flag placement
-                    this.commons.headMargin = 20;
+                let cvm = 0;
+                if (this.commons.viewerOptions.showSubFeatures && d.hasSubFeatures) {
+                    // chevron margin, placed rightly
+                    cvm = 17
+                }
+                // horizontal flag placement
+                this.commons.headMargin = 20;
                 if (d.ladderLabel == null) {
                     if (d.flagLevel) {
                         this.commons.headMargin = 20 * (d.flagLevel - 1);
@@ -353,54 +353,54 @@ class FeatureViewer {
         //     })
 
         // badges code, removing this will remove badges
-            ladderGroup.append('foreignObject')
-                .attr("width", "30px")
-                .attr("height", "30px")
-                .html(([i, d]) => {
+        ladderGroup.append('foreignObject')
+            .attr("width", "30px")
+            .attr("height", "30px")
+            .html(([i, d]) => {
                     if (d.ladderLabel) {
                         return  (d.id !== 'fv_sequence' && i===d.flagLevel-1) ?
                             `<div class="badge-feature badge-feature-sm" style="background-color: ${d.ladderBgColor}; color: ${d.ladderColor};
                         border-style: ${d.hasSubFeatures? 'solid' : 'hidden'}; border-width: 1px; border-color: ${d.ladderBorderColor}">${d.ladderLabel}</div>`: ''}
-                    }
-                )
+                }
+            )
 
-            ladderGroup.attr('transform', ([i, d]) => {
+        ladderGroup.attr('transform', ([i, d]) => {
+            if (d.ladderLabel) {
+                const margin = (this.commons.viewerOptions.margin.left + (i - 1) * this.commons.viewerOptions.ladderSpacing);
+                const ladderWidth = this.commons.viewerOptions.ladderSpacing * this.commons.viewerOptions.maxDepth;
+                const x = margin - ladderWidth;
+                const y = (d.y + this.commons.step / 6);
+                return "translate(" + x + "," + y + ")"
+            }
+        })
+
+        //
+        // .attr('width', this.commons.viewerOptions.ladderWidth).attr('height', this.commons.viewerOptions.ladderHeight)
+        // .attr('fill', ([i, d]) => {
+        //     return  (d.id !== 'fv_sequence' && i===d.flagLevel-1) ? d.ladderColor : 'rgba(255, 255, 255, 0)'
+        // })
+        // .attr('class', d => `ladder`)
+        // .attr('rx', 0)
+        // .attr('ry', 2)
+
+        ladderGroup.append('text')
+            .attr('transform', ([i, d]) => {
                 if (d.ladderLabel) {
                     const margin = (this.commons.viewerOptions.margin.left + (i - 1) * this.commons.viewerOptions.ladderSpacing);
                     const ladderWidth = this.commons.viewerOptions.ladderSpacing * this.commons.viewerOptions.maxDepth;
-                    const x = margin - ladderWidth;
-                    const y = (d.y + this.commons.step / 6);
+                    const x = margin - ladderWidth + this.commons.viewerOptions.ladderWidth / 2;
+                    const y = (d.y + this.commons.step);
                     return "translate(" + x + "," + y + ")"
                 }
             })
+        // .text(([i, d]) => i<d.flagLevel-1? '': d.ladderLabel)
+        // .attr('font-size', '.8125rem')
+        // .attr('fill', 'black')
+        // .attr('font-weight', 'bold')
+        // .style('alignment-baseline', 'after-edge')
+        // .style('text-anchor', 'middle')
 
-                //
-                // .attr('width', this.commons.viewerOptions.ladderWidth).attr('height', this.commons.viewerOptions.ladderHeight)
-                // .attr('fill', ([i, d]) => {
-                //     return  (d.id !== 'fv_sequence' && i===d.flagLevel-1) ? d.ladderColor : 'rgba(255, 255, 255, 0)'
-                // })
-                // .attr('class', d => `ladder`)
-            // .attr('rx', 0)
-            // .attr('ry', 2)
 
-            ladderGroup.append('text')
-                .attr('transform', ([i, d]) => {
-                    if (d.ladderLabel) {
-                        const margin = (this.commons.viewerOptions.margin.left + (i - 1) * this.commons.viewerOptions.ladderSpacing);
-                        const ladderWidth = this.commons.viewerOptions.ladderSpacing * this.commons.viewerOptions.maxDepth;
-                        const x = margin - ladderWidth + this.commons.viewerOptions.ladderWidth / 2;
-                        const y = (d.y + this.commons.step);
-                        return "translate(" + x + "," + y + ")"
-                    }
-                })
-                // .text(([i, d]) => i<d.flagLevel-1? '': d.ladderLabel)
-                // .attr('font-size', '.8125rem')
-                // .attr('fill', 'black')
-                // .attr('font-weight', 'bold')
-                // .style('alignment-baseline', 'after-edge')
-                // .style('text-anchor', 'middle')
-
-        
 
     }
 
@@ -950,6 +950,14 @@ class FeatureViewer {
 
         this.commons.svgElement = d3.select(`#${this.divId}`).select('svg').node();
 
+
+        console.log(this.commons.viewerOptions.margin.left)
+        console.log(this.commons.viewerOptions.margin.top)
+
+
+        console.log(this.commons.viewerOptions.margin.left)
+
+
         // features track box
         this.commons.svgContainer = this.commons.svg
             .append("g")
@@ -960,6 +968,8 @@ class FeatureViewer {
                 currentEvent.preventDefault();
                 // react on right-clicking
             });
+
+
         // background
         this.commons.svgContainer.append("rect")
             .attr("width", "100%")
